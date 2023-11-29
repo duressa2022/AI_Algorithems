@@ -96,8 +96,14 @@ def minimaxFunctionIII(state,player):
                         stack.append(state[i],-player)
                         state[i]=0
     return maxScore
-def minimaxFunctionIV(array,player,depth):
-    stack = [(array, player,depth)]
+def minimaxFunctionIV(state,player,depth):
+    """
+        This is main method of the game and returns max Score of the player and use stack and search until
+        depth of the become zero.
+        :param:state(usally one dimensional array and player by 1 or -1 and depth
+        :return:maxScore of player
+    """
+    stack = [(state, player,depth)]
     maxScore = None
     while stack:
         currentA,currentp,depth=stack.pop()
@@ -111,20 +117,26 @@ def minimaxFunctionIV(array,player,depth):
                 maxScore=min(maxScore, currentScore)
         else:
             if player==1:
-                for i in range(len(array)):
-                    if array[i]==0:
+                for i in range(len(state)):
+                    if state[i]==0:
                         array[i]=player
-                        stack.append((array,-player,depth-1))
+                        stack.append((state,-player,depth-1))
                         array[i]=0
             else:
-                for i in range(len(array)):
-                    if array[i]==0:
-                        array[i]=player
-                        stack.append(array[i],-player,depth-1)
+                for i in range(len(state)):
+                    if state[i]==0:
+                        state[i]=player
+                        stack.append(state[i],-player,depth-1)
                         array[i] = 0
     return maxScore
-def minimaxFunctionV(array,player):
-    queue=[(array, player)]
+def minimaxFunctionV(state,player):
+    """
+        This is main method of the game and returns max Score of the player and use queue and search until
+        the ends of the game tree.
+        :param:state(usally one dimensional array and player by 1 or -1
+        :return:maxScore of player
+    """
+    queue=[(state, player)]
     maxScore=None
     while queue:
         currentA,current=stack.pop(0)
@@ -138,17 +150,50 @@ def minimaxFunctionV(array,player):
                 maxScore=min(maxScore, currentScore)
         else:
             if player==1:
+                for i in range(len(state)):
+                    if state[i]==0:
+                        state[i]=player
+                        queue.append((state,-player))
+                        state[i]=0
+            else:
+                for i in range(len(state)):
+                    if state[i]==0:
+                        state[i]=player
+                        queue.append(state[i], -player)
+                        state[i]=0
+    return maxScore
+def minimaxFunctionVI(state,player,depth):
+    """
+        This is main method of the game and returns max Score of the player and use queue and search until
+        given depth become zero.
+        :param:state(usally one dimensional array and player by 1 or -1 and depth.
+        :return:maxScore of player
+    """
+    queue=[(state, player,depth)]
+    maxScore=None
+    while queue:
+        currentA,current,depth=stack.pop(0)
+        currentScore=evaluate(currentA)
+        if currentScore!=0:
+            if maxScore is None:
+                maxScore=currentScore
+            elif player==1:
+                maxScore=max(maxScore, currentScore)
+            else:
+                maxScore=min(maxScore, currentScore)
+        else:
+            if player==1:
                 for i in range(len(array)):
-                    if array[i]==0:
-                        array[i]=player
-                        queue.append((array,-player))
-                        array[i]=0
+                    if state[i]==0:
+                        state[i]=player
+                        queue.append((state,-player,depht-1))
+                        state[i]=0
             else:
                 for i in range(len(array)):
-                    if array[i]==0:
-                        array[i]=player
-                        queue.append(array[i], -player)
-                        array[i]=0
+                    if state[i]==0:
+                        state[i]=player
+                        queue.append(state[i], -player,depth-1)
+                        state[i]=0
     return maxScore
 
 
