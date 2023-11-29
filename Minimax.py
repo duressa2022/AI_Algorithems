@@ -12,21 +12,32 @@
      *Author:Duressa Shukuri
      *Email:duressashukuri2022@gmail.com
 """
-def evaluate(array,player):
-    return player
-def minimaxFunctionI(array,player):
-    if evaluate(array,player):
-        return evaluate(array)*player
+def evaluate(state,player):
+    """
+       This is Evaluation method Which identify winner in board game and its implementation depends on game type.
+       :param:state(usally one dimensional array and player by 1 or -1
+       :return:player if player wins the game else 0
+    """
+    return player or 0
+def minimaxFunctionI(state,player):
+    """
+        This is main method of the game and returns max Score of the player and doint use stack and search untill
+         the ens of the game tree.
+        :param:state(usally one dimensional array and player by 1 or -1
+        :return:maxScore of player
+    """
+    if evaluate(state,player):
+        return evaluate(state)*player
     score=-2
     move=-1
     for i in range(len(array)):
-        if array[i]==0:
+        if state[i]==0:
             array[i]=player
-            current=-functionName(array,-player)
+            current=-functionName(state,-player)
             if current>score:
                 score=current
                 move=i
-            array[i]=0
+            state[i]=0
     if move==-1:
         return 0
     return score
