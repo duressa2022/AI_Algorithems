@@ -21,8 +21,8 @@ def evaluate(state,player):
     return player or 0
 def minimaxFunctionI(state,player):
     """
-        This is main method of the game and returns max Score of the player and doint use stack and search untill
-         the ens of the game tree.
+        This is main method of the game and returns max Score of the player and dont use stack and search until
+         the ends of the game tree.
         :param:state(usally one dimensional array and player by 1 or -1
         :return:maxScore of player
     """
@@ -30,9 +30,9 @@ def minimaxFunctionI(state,player):
         return evaluate(state)*player
     score=-2
     move=-1
-    for i in range(len(array)):
+    for i in range(len(state)):
         if state[i]==0:
-            array[i]=player
+            state[i]=player
             current=-functionName(state,-player)
             if current>score:
                 score=current
@@ -41,24 +41,36 @@ def minimaxFunctionI(state,player):
     if move==-1:
         return 0
     return score
-def minimaxFunctionII(array,player,depth):
-    if evaluate(array,player):
+def minimaxFunctionII(state,player,depth):
+    """
+        This is main method of the game and returns max Score of the player and dont use stack and search until
+        untill given depth is reached.
+        :param:state(usally one dimensional array and player by 1 or -1 and max depth to search
+        :return:maxScore of player
+    """
+    if evaluate(state,player):
         return evaluate(array)*player
     score=-2
     move=-1
     for i in range(len(array)):
-        if array[i]==0:
+        if state[i]==0:
             array[i]=player
-            current=-functionName(array,-player,depth-1)
+            current=-functionName(state,-player,depth-1)
             if current>score:
                 score=current
                 move=i
-            array[i]=0
+            state[i]=0
     if move==-1:
         return 0
     return score
-def minimaxFunctionIII(array,player):
-    stack=[(array,player)]
+def minimaxFunctionIII(state,player):
+    """
+        This is main method of the game and returns max Score of the player and use stack and search until
+        the ends of the game tree.
+        :param:state(usally one dimensional array and player by 1 or -1
+        :return:maxScore of player
+    """
+    stack=[(state,player)]
     maxScore=None
     while stack:
         currentA,currentp=stack.pop()
@@ -73,16 +85,16 @@ def minimaxFunctionIII(array,player):
         else:
             if player==1:
                 for i in range(len(array)):
-                    if array[i]==0:
-                        array[i]=player
-                        stack.append((array,-player))
-                        array[i]=0
+                    if state[i]==0:
+                        state[i]=player
+                        stack.append((state,-player))
+                        state[i]=0
             else:
                 for i in range(len(array)):
-                    if array[i]==0:
-                        array[i]=player
-                        stack.append(array[i],-player)
-                        array[i]=0
+                    if state[i]==0:
+                        state[i]=player
+                        stack.append(state[i],-player)
+                        state[i]=0
     return maxScore
 def minimaxFunctionIV(array,player,depth):
     stack = [(array, player,depth)]
